@@ -11,6 +11,10 @@ function App() {
   const [fullData, setFullData] = useState(null);
   const [randomData, setRandomData] = useState(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [cardsPlayed, setCardsPlayed] = useState([]);
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+
   const url =
     'https://api.imdbapi.dev/titles?types=TV_SERIES&types=TV_MINI_SERIES&minVoteCount=100000&minAggregateRating=8.0';
   const optionsNumberOfCards = [4, 8, 12];
@@ -31,6 +35,28 @@ function App() {
     setRandomData(shuffled);
   }
 
+  function clickCard(id) {
+    if (cardsPlayed.length === 0 || !cardsPlayed.includes(id)) {
+      shuffleCards(randomData);
+      const newCardsPlayed = [...cardsPlayed, id];
+      setCardsPlayed(newCardsPlayed);
+      const newScore = score + 1;
+      setScore(newScore);
+      if (newScore > bestScore) setBestScore(bestScore + 1);
+      if (newCardsPlayed.length == numberOfCards) {
+        console.log('You win!');
+        resetGame();
+      }
+    } else {
+      console.log('You lose, your score: ' + score);
+      resetGame();
+    }
+  }
+
+  function resetGame() {
+    setCardsPlayed([]);
+    setScore(0);
+  }
   useEffect(() => {
     let ignore = false;
     fetch(url)
@@ -67,19 +93,28 @@ function App() {
   }, [fullData, numberOfCards, gameStarted]);
 
   return (
-    <div className="main">
-      <Scoreboard numberOfCards={numberOfCards} />
+    <>
       {!gameStarted ? (
-        <ButtonsOptionsNumberOfCards
-          options={optionsNumberOfCards}
-          selectNumberOfCards={selectNumberOfCards}
-        />
+        <div className="intro">
+          <h1>Choose a number of cards</h1>
+          <ButtonsOptionsNumberOfCards
+            options={optionsNumberOfCards}
+            selectNumberOfCards={selectNumberOfCards}
+          />
+        </div>
       ) : (
         randomData && (
-          <Playboard randomData={randomData} shuffleCards={shuffleCards} />
+          <div className="main">
+            <Scoreboard
+              numberOfCards={numberOfCards}
+              score={score}
+              bestScore={bestScore}
+            />
+            <Playboard randomData={randomData} clickCard={clickCard} />
+          </div>
         )
       )}
-    </div>
+    </>
   );
 }
 

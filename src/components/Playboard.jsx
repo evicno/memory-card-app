@@ -1,14 +1,15 @@
 import '../styles/Playboard.css';
 import Card from './Card';
 
-function Playboard({ randomData, shuffleCards }) {
+function Playboard({ clickCard, randomData }) {
   const listOfData = randomData.map((data) => (
     <Card
       title={data.title}
       image={data.image}
       key={data.id}
-      shuffleCards={shuffleCards}
-      randomData={randomData}
+      id={data.id}
+      clickCard={clickCard}
+      //randomData={randomData}
     />
   ));
 

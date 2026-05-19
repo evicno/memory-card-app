@@ -1,10 +1,10 @@
 import '../styles/Playboard.css';
 
-function Card({ title, image, shuffleCards, randomData }) {
+function Card({ title, image, clickCard, id }) {
   return (
     <div className="card">
       <p>{title}</p>
-      <img src={image.url} onClick={() => shuffleCards(randomData)} />
+      <img src={image.url} onClick={() => clickCard(id)} />
     </div>
   );
 }
