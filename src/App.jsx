@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useMemo } from 'react';
 import './styles/App.css';
 
 import Scoreboard from './components/Scoreboard';
@@ -9,6 +8,7 @@ import Playboard from './components/Playboard';
 function App() {
   const [numberOfCards, setNumberOfCards] = useState(4);
   const [fullData, setFullData] = useState(null);
+  const [randomData, setRandomData] = useState(null);
 
   const url =
     'https://api.imdbapi.dev/titles?types=TV_SERIES&types=TV_MINI_SERIES&minVoteCount=100000&minAggregateRating=8.0';
@@ -27,23 +27,25 @@ function App() {
     };
   }, []);
 
-  const randomData = useMemo(() => {
-    if (!fullData || fullData <= 1) return null;
-
-    let randomIndex = new Set();
-    let randomArray = [];
-    while (randomIndex.size < numberOfCards) {
-      let newIndex = Math.floor(Math.random() * fullData.length);
-      randomIndex.add(newIndex);
+  useEffect(() => {
+    if (fullData && fullData.length > 1) {
+      let randomIndex = new Set();
+      let randomArray = [];
+      while (randomIndex.size < numberOfCards) {
+        let newIndex = Math.floor(Math.random() * fullData.length);
+        randomIndex.add(newIndex);
+      }
+      for (let index of randomIndex) {
+        let newEntry = {
+          id: fullData[index].id,
+          title: fullData[index].primaryTitle,
+          image: fullData[index].primaryImage,
+        };
+        randomArray.push(newEntry);
+      }
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setRandomData(randomArray);
     }
-    for (let index of randomIndex) {
-      let newEntry = {
-        title: fullData[index].primaryTitle,
-        image: fullData[index].primaryImage,
-      };
-      randomArray.push(newEntry);
-    }
-    return randomArray;
   }, [fullData, numberOfCards]);
 
   return (
@@ -59,7 +61,7 @@ function App() {
         <h2>Nombre d'élements : {randomData.length}</h2>
       )}
       <Scoreboard numberOfCards={numberOfCards} />
-      <Playboard numberOfCards={numberOfCards} />
+      {randomData && <Playboard randomData={randomData} />}
     </div>
   );
 }
