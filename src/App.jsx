@@ -20,6 +20,17 @@ function App() {
     setGameStarted(true);
   }
 
+  // Shuffle function using the Fisher-Yates algorithm
+  function shuffleCards(data) {
+    const shuffled = [...data];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    console.log(shuffled);
+    setRandomData(shuffled);
+  }
+
   useEffect(() => {
     let ignore = false;
     fetch(url)
@@ -64,7 +75,9 @@ function App() {
           selectNumberOfCards={selectNumberOfCards}
         />
       ) : (
-        randomData && <Playboard randomData={randomData} />
+        randomData && (
+          <Playboard randomData={randomData} shuffleCards={shuffleCards} />
+        )
       )}
     </div>
   );
