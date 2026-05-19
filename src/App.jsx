@@ -4,14 +4,21 @@ import './styles/App.css';
 
 import Scoreboard from './components/Scoreboard';
 import Playboard from './components/Playboard';
+import ButtonsOptionsNumberOfCards from './components/ButtonsOptionsOfCards';
 
 function App() {
   const [numberOfCards, setNumberOfCards] = useState(4);
   const [fullData, setFullData] = useState(null);
   const [randomData, setRandomData] = useState(null);
-
+  const [gameStarted, setGameStarted] = useState(false);
   const url =
     'https://api.imdbapi.dev/titles?types=TV_SERIES&types=TV_MINI_SERIES&minVoteCount=100000&minAggregateRating=8.0';
+  const optionsNumberOfCards = [4, 8, 12];
+
+  function selectNumberOfCards(number) {
+    setNumberOfCards(number);
+    setGameStarted(true);
+  }
 
   useEffect(() => {
     let ignore = false;
@@ -46,22 +53,19 @@ function App() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setRandomData(randomArray);
     }
-  }, [fullData, numberOfCards]);
+  }, [fullData, numberOfCards, gameStarted]);
 
   return (
     <div className="main">
-      {!fullData ? (
-        <h2>Chargement en cours...</h2>
-      ) : (
-        <h2>Nombre d'élements : {fullData.length}</h2>
-      )}
-      {!randomData ? (
-        <h2>Chargement en cours...</h2>
-      ) : (
-        <h2>Nombre d'élements : {randomData.length}</h2>
-      )}
       <Scoreboard numberOfCards={numberOfCards} />
-      {randomData && <Playboard randomData={randomData} />}
+      {!gameStarted ? (
+        <ButtonsOptionsNumberOfCards
+          options={optionsNumberOfCards}
+          selectNumberOfCards={selectNumberOfCards}
+        />
+      ) : (
+        randomData && <Playboard randomData={randomData} />
+      )}
     </div>
   );
 }
