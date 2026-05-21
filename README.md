@@ -1,16 +1,33 @@
-# React + Vite
+# Memory Card Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Memory card game built with React (project from The Odin Project)
 
-Currently, two official plugins are available:
+[live demo](https://evicno-memory-card.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![preview](./src/assets/screenshot.png)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Card data fetched from the IMDB API** — top-rated TV series with 100k+ votes and a rating of 8+
+- **Cards shuffle** after every click using the Fisher-Yates algorithm
+- **Responsive grid layout** adapting to any number of cards
+- Win/lose modal with score summary
+- Best score tracking across rounds
+- **Responsive design** (adapted for desktop, tablet and mobile)
 
-## Expanding the ESLint configuration
+## Built with
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React** + **Vite**
+- `useEffect` for data fetching
+- `useState` for game state management
+
+## What I learned
+
+- Fetching and managing external API data with `useEffect`
+- Difference between `useEffect` and `useState`
+- Shuffling arrays with the Fisher-Yates algorithm
+- Handling mobile viewports with `dvh`
+
+## Credits
+
+<a href="https://www.flaticon.com/free-icons/television" title="television icons">Television icons created by Freepik - Flaticon</a>
