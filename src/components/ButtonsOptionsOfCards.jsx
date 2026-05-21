@@ -10,7 +10,7 @@ function ButtonsOptionsNumberOfCards({ options, selectNumberOfCards }) {
     />
   ));
 
-  return <div className="buttons-number-cards">{listOfOptions}</div>;
+  return <div className="buttons">{listOfOptions}</div>;
 }
 
 export default ButtonsOptionsNumberOfCards;

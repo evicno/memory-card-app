@@ -1,1 +1,11 @@
+.buttons {
+  display: flex;
+  gap: 2rem;
+}
 
+button {
+  font-size: 2rem;
+  width: 4rem;
+  border-radius: 10px;
+  border-color: var(--dark-primary-color);
+}

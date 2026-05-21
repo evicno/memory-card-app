@@ -1,0 +1,29 @@
+.scoreboard {
+  font-size: 1.25rem;
+  padding-bottom: 2rem;
+}
+
+.playboard {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.card {
+  border: 6px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: var(--light-primary-color);
+  display: grid;
+  grid-template-rows: 3rem 1fr;
+  justify-items: center;
+  align-items: center;
+  box-shadow: 9px 8px 6px -1px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  text-align: center;
+}
+
+.card img {
+  border-radius: 5px;
+}

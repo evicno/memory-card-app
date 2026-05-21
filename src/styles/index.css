@@ -77,13 +77,32 @@ h6 {
 
 :root {
   /* Couleurs principales */
-  --dark-primary-color: #2c3947;
-  --primary-color: #547a95;
-  --light-primary-color: #e8edf2;
-  --secondary-color: #c2a56d;
-  /* background-color: var(--bg-color); */
+  --dark-primary-color: #170c79;
+  --primary-color: #56b6c6;
+  --light-primary-color: #8acbd0;
+  --secondary-color: #efe3ca;
 
   /* Espacements cohérents */
   --main-padding: 1.5rem;
   --card-radius: 8px;
+}
+
+@font-face {
+  font-family: 'Cabin Sketch';
+  src:
+    url('../assets/CabinSketch-Regular.woff2') format('woff2'),
+    url('../assets/CabinSketch-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cabin Sketch';
+  src:
+    url('../assets/CabinSketch-Bold.woff2') format('woff2'),
+    url('../assets/CabinSketch-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }

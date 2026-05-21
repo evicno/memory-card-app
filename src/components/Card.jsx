@@ -1,4 +1,4 @@
-import '../styles/Playboard.css';
+import '../styles/Gameboard.css';
 
 function Card({ title, image, clickCard, id }) {
   return (

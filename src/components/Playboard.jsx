@@ -1,4 +1,4 @@
-import '../styles/Playboard.css';
+import '../styles/Gameboard.css';
 import Card from './Card';
 
 function Playboard({ clickCard, randomData }) {
@@ -9,7 +9,6 @@ function Playboard({ clickCard, randomData }) {
       key={data.id}
       id={data.id}
       clickCard={clickCard}
-      //randomData={randomData}
     />
   ));
 

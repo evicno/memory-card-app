@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import './styles/App.css';
 
+import Header from './components/Header';
 import Scoreboard from './components/Scoreboard';
 import Playboard from './components/Playboard';
 import ButtonsOptionsNumberOfCards from './components/ButtonsOptionsOfCards';
+import Modal from './components/Modal';
 
 function App() {
   const [numberOfCards, setNumberOfCards] = useState(4);
@@ -14,6 +16,7 @@ function App() {
   const [cardsPlayed, setCardsPlayed] = useState([]);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [gameOver, setGameOver] = useState(null);
 
   const url =
     'https://api.imdbapi.dev/titles?types=TV_SERIES&types=TV_MINI_SERIES&minVoteCount=100000&minAggregateRating=8.0';
@@ -31,7 +34,6 @@ function App() {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    console.log(shuffled);
     setRandomData(shuffled);
   }
 
@@ -44,19 +46,20 @@ function App() {
       setScore(newScore);
       if (newScore > bestScore) setBestScore(bestScore + 1);
       if (newCardsPlayed.length == numberOfCards) {
-        console.log('You win!');
-        resetGame();
+        setGameOver('win');
       }
     } else {
-      console.log('You lose, your score: ' + score);
-      resetGame();
+      setGameOver('lose');
     }
   }
 
   function resetGame() {
     setCardsPlayed([]);
     setScore(0);
+    setGameStarted(false);
+    setGameOver(null);
   }
+
   useEffect(() => {
     let ignore = false;
     fetch(url)
@@ -95,16 +98,21 @@ function App() {
   return (
     <>
       {!gameStarted ? (
-        <div className="intro">
-          <h1>Choose a number of cards</h1>
-          <ButtonsOptionsNumberOfCards
-            options={optionsNumberOfCards}
-            selectNumberOfCards={selectNumberOfCards}
-          />
+        <div className="home">
+          <Header gameStarted={gameStarted} resetGame={resetGame} />
+
+          <div className="select">
+            <h2>Choose a number of cards</h2>
+            <ButtonsOptionsNumberOfCards
+              options={optionsNumberOfCards}
+              selectNumberOfCards={selectNumberOfCards}
+            />
+          </div>
         </div>
       ) : (
         randomData && (
           <div className="main">
+            <Header gameStarted={gameStarted} resetGame={resetGame} />
             <Scoreboard
               numberOfCards={numberOfCards}
               score={score}
@@ -113,6 +121,17 @@ function App() {
             <Playboard randomData={randomData} clickCard={clickCard} />
           </div>
         )
+      )}
+      {gameOver && (
+        <>
+          <div className="backdrop" />
+          <Modal
+            score={score}
+            bestScore={bestScore}
+            gameOver={gameOver}
+            resetGame={resetGame}
+          />
+        </>
       )}
     </>
   );
